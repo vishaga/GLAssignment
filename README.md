@@ -72,14 +72,14 @@ You will need to keep the messages in order that it comes in. There will be a pr
 method to add new messages and the consumers will be calling the next method in order to fetch the messages one by one. 
 
 Few conditions:
-	1. There will be a position id which is an incremental id which starts at 0.
-	2. next(long positionId) returns the first message bigger than the position id, so next(0) will not return a message at position 0, but 1 or higher.
-	3. If you keep calling next with the same position id and nothing is being offered, it should keep returning the same message. 
-	4. The consumer should call the next(-1 or lower) for the first next call ever. Afterwards, it will call next with the position id returned by MessagePosition class below.
-	5. If you offer two messages with the same key, you deduplicate the older one. 
-	6. You should not keep more than 100 messages. For example, if you offer 101 unique key messages and then call next(-1), it should get the message at position 1 not 0.
-	7. For purpose of this problem, we will NOT send more than Long.MAX_VALUE amount of messages so do not worry about overflow or if you need to reset the position id. 
-	8. Assume this will be used by a singled threaded environment. 
+1. There will be a position id which is an incremental id which starts at 0.
+2. next(long positionId) returns the first message bigger than the position id, so next(0) will not return a message at position 0, but 1 or higher.
+3. If you keep calling next with the same position id and nothing is being offered, it should keep returning the same message. 
+4. The consumer should call the next(-1 or lower) for the first next call ever. Afterwards, it will call next with the position id returned by MessagePosition class below.
+5. If you offer two messages with the same key, you deduplicate the older one. 
+6. You should not keep more than 100 messages. For example, if you offer 101 unique key messages and then call next(-1), it should get the message at position 1 not 0.
+7. For purpose of this problem, we will NOT send more than Long.MAX_VALUE amount of messages so do not worry about overflow or if you need to reset the position id. 
+8. Assume this will be used by a singled threaded environment. 
 ```java	
 	// Implement this class.
 	public interface MessageStreamer<K, V> {
